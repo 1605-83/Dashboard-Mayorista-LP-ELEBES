@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard Mayorista LP - ELEBES</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--azul:#000;--azul2:#161616;--claro:#7FC4FF;--blanco:#fff}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--azul);color:var(--blanco);font-family:Roboto,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;line-height:1.4}
+.wrap{max-width:760px;margin:0 auto;padding:28px 16px 48px}
+h1{margin:0 0 8px;padding:14px 20px;border:3px solid var(--blanco);border-radius:12px;font-size:clamp(1.3rem,4vw,1.9rem);font-weight:900;letter-spacing:.02em;text-align:center}
+.sub{margin:0 0 24px;text-align:center;font-size:.9rem;color:#D5E4FF}
+details{margin:0 0 14px;border:2px solid rgba(255,255,255,.55);border-radius:12px;background:var(--azul2);overflow:hidden}
+summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;font-size:1.15rem;font-weight:700}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:1.5rem;font-weight:500;line-height:1}
+details[open] summary::after{content:"−"}
+summary:focus-visible,a:focus-visible{outline:3px solid var(--claro);outline-offset:2px}
+ul{margin:0;padding:0 12px 12px;list-style:none}
+li+li{margin-top:8px}
+/* cada acceso: tarjeta blanca, titulo en negrita y descripcion en gris */
+a{display:flex;flex-direction:column;gap:6px;padding:18px 24px;border-radius:12px;background:#fff;color:#1F2328;text-decoration:none;border:1px solid #E5E7EB;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+a:hover{box-shadow:0 4px 14px rgba(0,0,0,.25)}
+a b{font-size:1.1rem;font-weight:700;color:#1F2328}
+a span{font-size:.95rem;color:#6B7280}
+li+li{margin-top:12px}
+.prox{padding:12px 16px;border-radius:10px;border:1px dashed rgba(255,255,255,.45);color:#D5E4FF;font-size:.95rem}
+footer{margin-top:28px;text-align:center;font-size:.8rem;color:#C2D6FF}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Dashboard Mayorista LP - ELEBES</h1>
+  <p class="sub">Lago Puelo · Elebes · catálogos y listas de precios mayoristas (Lista 2) · los precios se actualizan solos desde Gescom</p>
+
+  <details>
+    <summary>Catálogos</summary>
+    <ul>
+      <li><a href="https://1605-83.github.io/Lista-Precios-Octubre-2026/catalogo-softys.html?lista=2"><b>Catálogo Softys</b><span>Productos por segmento con foto, precio por bulto y por unidad (Lista 2 mayorista con IVA)</span></a></li>
+      <li><a href="https://1605-83.github.io/Lista-Precios-Octubre-2026/catalogo-clorox.html?lista=2"><b>Catálogo Clorox</b><span>Ayudín, Poett, Mortimer, Selton y más: por segmento con foto, precio por bulto y por unidad</span></a></li>
+      <li><a href="https://1605-83.github.io/Lista-Precios-Octubre-2026/catalogo-ecovita.html?lista=2"><b>Catálogo Ecovita</b><span>Jabones líquidos, suavizantes, limpiadores y lavavajillas: con foto, precio por bulto y por unidad</span></a></li>
+      <li><a href="https://1605-83.github.io/Lista-Precios-Octubre-2026/catalogo-georgalos.html?lista=2"><b>Catálogo Georgalos</b><span>Golosinas, chocolates, Mantecol, Toddy, barritas y cereales: con foto, precio por bulto y por unidad</span></a></li>
+      <li><a href="https://1605-83.github.io/Lista-Precios-Octubre-2026/catalogo-cepas.html?lista=2"><b>Catálogo Cepas</b><span>Aperitivos, amargos y alto grado: Gancia, Dr. Lemon, Terma, Martini, Amarula y más, con precios actualizados</span></a></li>
+      <li><a href="https://1605-83.github.io/Lista-Precios-Octubre-2026/catalogo-pdnb.html?lista=2"><b>Catálogo Porta · Dreamco · Necho · Bic</b><span>Bialcohol, Zorro, Plusbelle, Separata, Asurín, afeitadoras y encendedores Bic, con precios actualizados</span></a></li>
+      <li><a href="https://1605-83.github.io/Lista-Precios-Octubre-2026/catalogo-otm.html?lista=2"><b>Catálogo OTM Almacén</b><span>Otras marcas: Celusal, Menoyo, Morixe, Ledesma, Castell, Tayal, Chacabuco, Maní King y más, con precio de lista</span></a></li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Listas de precios</summary>
+    <ul id="listas-precios">
+      <li><a href="https://1605-83.github.io/Lista-Precios-Octubre-2026/?lista=2"><b>Todas las listas de precios</b><span>Lista 2 mayorista con IVA: precio por bulto y por unidad, con buscador</span></a></li>
+    </ul>
+  </details>
+  <script>
+  // Una tarjeta por cada lista de precios, leida de la pagina de listas: si aparece un proveedor nuevo, aparece su tarjeta
+  (function(){
+    const BASE = 'https://1605-83.github.io/Lista-Precios-Octubre-2026/';
+    const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    const fecha = iso => iso ? iso.split('-').reverse().join('/') : '';
+    fetch(BASE + 'datos-l2.json', {cache:'no-store'}).then(r => r.ok ? r.json() : Promise.reject(r.status)).then(d => {
+      const ul = document.getElementById('listas-precios');
+      ul.insertAdjacentHTML('beforeend', d.listas.map(l =>
+        `<li><a href="${BASE}?p=${encodeURIComponent(l.proveedor)}&lista=2"><b><i style="display:inline-block;width:.8em;height:.8em;border-radius:3px;margin-right:8px;vertical-align:-.05em;background:#${esc(l.color)}"></i>Lista de precios ${esc(l.nombre)}</b><span>Vigencia ${fecha(l.vigencia)} · ${l.productos.length} productos</span></a></li>`).join(''));
+    }).catch(() => {});
+  })();
+  </script>
+
+
+  <footer>Datos de la base de Gescom</footer>
+</div>
+</body>
+</html>
